@@ -86,7 +86,7 @@
         async function chats_generete(){
           let res = await eel.get_chats()();
 
-          res.forEach(function(i){
+          res.forEach(async function(i){
           	let new_item = '<div class="chat_list" chat_id="'+i[0]+'">\
               <div class="chat_people">\
                 <div class="chat_ib">\
@@ -99,12 +99,14 @@
           	$('#chat_box').append(new_item);
 
           	$('.chat_list').first().addClass('active_chat');
+          	await update_messages();
 
           });
         }
 
-        function update_messages(){
-
+        async function update_messages(){
+        	let msgs = await eel.get_messages($('.active_chat').attr('chat_id'))();
+        	console.log(msgs);
         }
      	
      	function send_message(){
@@ -127,11 +129,11 @@
         	chats_generete();
         });
 
-        $(document).on('click','.chat_list', function(){
+        $(document).on('click','.chat_list', async function(){
         	$('.active_chat').removeClass('active_chat');
         	$(this).addClass('active_chat');
 
-        	update_messages();
+        	await update_messages();
         });
         
     </script>
