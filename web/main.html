@@ -86,7 +86,7 @@
         async function chats_generete(){
           let res = await eel.get_chats()();
 
-          res.forEach(async function(i){
+          res.forEach(function(i){
           	let new_item = '<div class="chat_list" chat_id="'+i[0]+'">\
               <div class="chat_people">\
                 <div class="chat_ib">\
@@ -99,14 +99,31 @@
           	$('#chat_box').append(new_item);
 
           	$('.chat_list').first().addClass('active_chat');
-          	await update_messages();
-
           });
+
+          await update_messages();
         }
 
         async function update_messages(){
-        	let msgs = await eel.get_messages($('.active_chat').attr('chat_id'))();
-        	console.log(msgs);
+        	let id = $('.active_chat').attr('chat_id');
+ 	       	let msgs = await eel.get_messages(id)();
+ 	       	msgs = msgs.reverse();
+        	$('.msg_history').empty();
+
+        	msgs.forEach(async function(i){
+        		new_item = '\
+		        		<div class="incoming_msg">\
+		              <div class="received_msg">\
+		                <div class="received_withd_msg">\
+		                  <p>'+i['value']+'</p>\
+		                  <span class="time_date">'+i['date']+'</span></div>\
+		              </div>\
+		            </div>\
+		        		';
+
+		       	$('.msg_history').append(new_item);
+        	});
+
         }
      	
      	function send_message(){

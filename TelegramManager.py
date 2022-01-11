@@ -13,31 +13,34 @@ client = TelegramClient('session', api_id, api_hash, retry_delay=30, auto_reconn
 
 
 def parse_message(msg):
-    e = {
-        'msg_id': msg.id,
-        'type': '',
-        'value': '',
-        'date': str(msg.date)
-    }
-
-    if msg.media is not None:
-        try:
-            e['type'] = 'document'
-        except:
-            e['type'] = 'photo'
-
-        e['value'] = client.download_media(message=msg, file="media/")
-
-    else:
-        e['type'] = 'text'
-        e['value'] = msg.message
-
     try:
-        e['from'] = msg.from_id.user_id
-    except:
-        e['from']: False
+        e = {
+            'msg_id': msg.id,
+            'type': '',
+            'value': '',
+            'date': str(msg.date)
+        }
 
-    return e
+        if msg.media is not None:
+            try:
+                e['type'] = 'document'
+            except:
+                e['type'] = 'photo'
+
+            e['value'] = client.download_media(message=msg, file="media/")
+
+        else:
+            e['type'] = 'text'
+            e['value'] = msg.message
+
+        try:
+            e['from'] = msg.from_id.user_id
+        except:
+            e['from']: False
+
+        return e
+    except:
+        return None
 
 
 # @client.on(events.NewMessage())

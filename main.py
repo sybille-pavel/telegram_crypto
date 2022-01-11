@@ -14,7 +14,9 @@ def send_message(id, text):
 
 @eel.expose
 def get_messages(id):
-    return TelegramManager.get_messages(id)
+    print(id)
+    res = TelegramManager.get_messages(int(id), limit=5)
+    return res
 
 
 eel.init("web")
