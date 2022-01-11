@@ -29,5 +29,5 @@ def get_chats():
     return chats
 
 
-def send_file():
-    pass
+def send_file(id, file):
+    client.send_file(id, file)

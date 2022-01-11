@@ -1,7 +1,7 @@
 #import eel
 import TelegramManager
 
-print(TelegramManager.get_chats())
+TelegramManager.send_file("vitalyi_shpagin", "web/main.html")
 
 exit()
 
