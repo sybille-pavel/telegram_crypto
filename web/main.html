@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <script src="eel.js"></script>
-    <link rel="stylesheet" href="/icon.png">
+    <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Crypto</title>
 </head>
 <body>
@@ -25,77 +26,8 @@
                 </span> </div>
             </div>
           </div>
-          <div class="inbox_chat">
-            <div class="chat_list active_chat">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
+          <div class="inbox_chat" id="chat_box">
+            
           </div>
         </div>
         <div class="mesgs">
@@ -149,5 +81,59 @@
         </div>
       </div>
     </div></div>
+
+    <script>
+        async function chats_generete(){
+          let res = await eel.get_chats()();
+
+          res.forEach(function(i){
+          	let new_item = '<div class="chat_list" chat_id="'+i[0]+'">\
+              <div class="chat_people">\
+                <div class="chat_ib">\
+                  <h5>' + i[1] +' - ' + i[0] +' <span class="chat_date">Dec 25</span></h5>\
+                  <p> последнее сообщение</p>\
+                </div>\
+              </div>\
+            </div>';
+
+          	$('#chat_box').append(new_item);
+
+          	$('.chat_list').first().addClass('active_chat');
+
+          });
+        }
+
+        function update_messages(){
+
+        }
+     	
+     	function send_message(){
+     		alert('отправляем сообщение');
+     	}
+
+     	$('input').keydown(async function(e) {
+	   	 if(e.keyCode === 13) {
+	   	 		let text = $(this).val();
+	   	 		let id = $('.active_chat').attr('chat_id');
+
+	   	 		await eel.send_message(id, text)();
+
+	   	 		$(this).val('');
+		    }
+		});
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+        	chats_generete();
+        });
+
+        $(document).on('click','.chat_list', function(){
+        	$('.active_chat').removeClass('active_chat');
+        	$(this).addClass('active_chat');
+
+        	update_messages();
+        });
+        
+    </script>
 </body>
 </html>
