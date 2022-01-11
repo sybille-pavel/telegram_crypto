@@ -1,3 +1,4 @@
+import RSATelegram
 import eel
 import TelegramManager
 
@@ -10,6 +11,12 @@ def get_chats():
 @eel.expose
 def send_message(id, text):
     print(id, text)
+
+@eel.expose
+def send_public_key(id):
+	crypto = RSATelegram.RSAMessages(id)
+	TelegramManager.send_file(id, crypto.getPathPublicKey())
+
 
 
 eel.init("web")
