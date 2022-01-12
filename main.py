@@ -10,13 +10,18 @@ def get_chats():
 
 @eel.expose
 def send_message(id, text):
-    print(id, text)
+    crypto = RSATelegram.RSAMessages(id)
+    if crypto.getCompanionPublicKey():
+        TelegramManager.send_file(id, crypto.encryptData(text))
+    else:
+        print("Ошибка ебанный рот")
 
 
 @eel.expose
 def send_public_key(id):
     crypto = RSATelegram.RSAMessages(id)
     TelegramManager.send_file(id, crypto.getPathPublicKey())
+    crypto.setChatInfo(1)
 
 
 @eel.expose

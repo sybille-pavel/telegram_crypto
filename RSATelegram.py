@@ -37,6 +37,14 @@ class RSAMessages:
         else:
             return file.read()
 
+    def getChatInfo(self):
+        try:
+            file = open(self.getPathChatInfo())
+        except FileNotFoundError as e:
+            return 0
+        else:
+            return file.read()
+
     def getPathPublicKey(self):
         return self.chatId + "/receiver.pem"
 
@@ -49,12 +57,22 @@ class RSAMessages:
     def getPathMessageFile(self):
         return self.chatId + "/messagebin.bin"
 
+    def getPathChatInfo(self):
+        return self.chatId + "/info.bin"
+
+
     def setCompanionPublicKey(self, publicKey, reCreate=False):
         filepath = self.getPathCompanionPublicKey()
         if (not self.getCompanionPublicKey() or reCreate):
             file = open(filepath, "wb")
             file.write(RSA.import_key(publicKey).export_key())
             file.close()
+
+    def setChatInfo(self, info):
+        filepath = self.getPathChatInfo()
+        file = open(filepath, "wb")
+        file.write(info)
+        file.close()
 
     def generateKey(self, reCreate=False):
         if ((self.getPrivateKey() and self.getPublicKey()) and not reCreate):
