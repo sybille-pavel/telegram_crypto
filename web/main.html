@@ -32,46 +32,6 @@
         </div>
         <div class="mesgs">
           <div class="msg_history">
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test which is a new approach to have all
-                    solutions</p>
-                  <span class="time_date"> 11:01 AM    |    June 9</span></div>
-              </div>
-            </div>
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Test which is a new approach to have all
-                  solutions</p>
-                <span class="time_date"> 11:01 AM    |    June 9</span> </div>
-            </div>
-
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test, which is a new approach to have</p>
-                  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-              </div>
-            </div>
-
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Apollo University, Delhi, India Test</p>
-                <span class="time_date"> 11:01 AM    |    Today</span> </div>
-            </div>
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>We work directly with our designers and suppliers,
-                    and sell direct to you, which means quality, exclusive
-                    products, at a price anyone can afford.</p>
-                  <span class="time_date"> 11:01 AM    |    Today</span></div>
-              </div>
-            </div>
           </div>
           <div class="type_msg">
             <div class="input_msg_write">
@@ -82,7 +42,27 @@
       </div>
     </div></div>
 
+
     <script>
+
+    	function generete_my_message(text, date){
+    		return '<div class="outgoing_msg">\
+              <div class="sent_msg">\
+                <p>'+text+'</p>\
+                <span class="time_date"> '+date+' </span> </div>\
+            </div>';
+    	}
+
+    	function generete_your_message(text, date){
+    		return '<div class="incoming_msg">\
+              <div class="received_msg">\
+                <div class="received_withd_msg">\
+                  <p>'+text+'</p>\
+                  <span class="time_date"> '+date+'</span></div>\
+              </div>\
+            </div>';
+    	}
+
         async function chats_generete(){
           let res = await eel.get_chats()();
 
@@ -91,7 +71,6 @@
               <div class="chat_people">\
                 <div class="chat_ib">\
                   <h5>' + i[1] +' - ' + i[0] +' <span class="chat_date">Dec 25</span></h5>\
-                  <p> последнее сообщение</p>\
                 </div>\
               </div>\
             </div>';
@@ -111,15 +90,8 @@
         	$('.msg_history').empty();
 
         	msgs.forEach(async function(i){
-        		new_item = '\
-		        		<div class="incoming_msg">\
-		              <div class="received_msg">\
-		                <div class="received_withd_msg">\
-		                  <p>'+i['value']+'</p>\
-		                  <span class="time_date">'+i['date']+'</span></div>\
-		              </div>\
-		            </div>\
-		        		';
+        		console.log(i);
+        		new_item = i['from'] ? generete_my_message(i['value'], i['date']) : generete_your_message(i['value'], i['date']);
 
 		       	$('.msg_history').append(new_item);
         	});

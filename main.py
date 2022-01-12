@@ -14,16 +14,13 @@ def send_message(id, text):
 
 @eel.expose
 def send_public_key(id):
-	crypto = RSATelegram.RSAMessages(id)
-	TelegramManager.send_file(id, crypto.getPathPublicKey())
-
+    crypto = RSATelegram.RSAMessages(id)
+    TelegramManager.send_file(id, crypto.getPathPublicKey())
 
 
 @eel.expose
 def get_messages(id):
-    print(id)
-    res = TelegramManager.get_messages(int(id), limit=5)
-    return res
+    return TelegramManager.get_messages(int(id), limit=5)
 
 
 eel.init("web")
