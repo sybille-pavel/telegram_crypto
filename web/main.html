@@ -45,6 +45,14 @@
 
     <script>
 
+    	setInterval(async function() { 
+    		let id = $('.active_chat').attr('chat_id');
+		   let msgs = await eel.get_messages(id)();
+
+
+		   console.log(msgs);
+		}, 1000);
+
     	function generete_text(text){
     		if(text.split('.').pop() == "jpg" || text.split('.').pop() == "jpg"){
     			return "<img src='"+text+"'></img>";
