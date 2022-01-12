@@ -66,7 +66,7 @@ def get_chats():
                  offset_date='',
                  offset_id=0,
                  offset_peer=InputPeerEmpty(),
-                 limit=10000,
+                 limit=5,
                  hash=0
              ))
 
