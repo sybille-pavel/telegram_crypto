@@ -91,14 +91,17 @@
           await update_messages();
         }
 
+
         async function update_messages(){
         	let id = $('.active_chat').attr('chat_id');
  	       	let msgs = await eel.get_messages(id)();
  	       	msgs = msgs.reverse();
         	$('.msg_history').empty();
 
-        	if(0){
-        		$('#input_msg_write').html('<button type="button" class="btn btn-danger btn-keys">Обменяться ключами</button>');
+        	let info = await eel.get_chat_info(id)();
+
+        	if(!info){
+        		$('#input_msg_write').html('<button type="button" id="do_keys" class="btn btn-danger btn-keys">Обменяться ключами</button>');
         	}else{
         		$('#input_msg_write').html('<input type="text" style="width:100%" class="write_msg" placeholder="Type a message" /> ');
         	}
@@ -111,6 +114,12 @@
 
         }
      	
+     	$(document).on('click','#do_keys', async function(){
+     		let id = $('.active_chat').attr('chat_id');
+        	await eel.send_public_key(id)();
+        	alert('ключ отправлен');
+        });
+
      	function send_message(){
      		alert('отправляем сообщение');
      	}

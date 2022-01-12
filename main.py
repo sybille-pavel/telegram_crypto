@@ -2,7 +2,6 @@ import RSATelegram
 import eel
 import TelegramManager
 
-
 @eel.expose
 def get_chats():
     return TelegramManager.get_chats()
@@ -20,7 +19,7 @@ def send_message(id, text):
 @eel.expose
 def send_public_key(id):
     crypto = RSATelegram.RSAMessages(id)
-    TelegramManager.send_file(id, crypto.getPathPublicKey())
+    TelegramManager.send_file(int(id), crypto.getPathPublicKey())
     crypto.setChatInfo(1)
 
 
@@ -38,5 +37,15 @@ def get_companion_public_key(id):
     crypto = RSATelegram.RSAMessages(id)
     return crypto.getCompanionPublicKey()
 
+# @TelegramManager.client.on(TelegramManager.events.NewMessage())
+# async def normal_handler(event):
+#     print(parse_message(event.message))
+
+
+# def function1():
+#     TelegramManager.client.run_until_disconnected()
+
+
 eel.init("web")
 eel.start("main.html", size=(1200, 700))
+

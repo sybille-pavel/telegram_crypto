@@ -43,13 +43,6 @@ def parse_message(msg):
         return None
 
 
-# @client.on(events.NewMessage())
-# async def normal_handler(event):
-#     print(parse_message(event.message))
-#
-# client.run_until_disconnected()
-
-
 def get_messages(id, limit=10):
     messages = client.get_messages(id, limit=limit)
     res = []
