@@ -70,8 +70,8 @@ class RSAMessages:
 
     def setChatInfo(self, info):
         filepath = self.getPathChatInfo()
-        file = open(filepath, "wb")
-        file.write(info)
+        file = open(filepath, "a")
+        file.write(str(info))
         file.close()
 
     def generateKey(self, reCreate=False):

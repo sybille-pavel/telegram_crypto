@@ -10,10 +10,15 @@ api_hash = 'fc0e17812ae016a0345db633499a2d98'
 name = 'session'
 
 client = TelegramClient('session', api_id, api_hash, retry_delay=30, auto_reconnect=True).start()
+messageId = []
 
 
 def parse_message(msg):
     try:
+        if msg.id in messageId: return None
+
+        messageId.append(msg.id)
+
         e = {
             'msg_id': msg.id,
             'type': '',
@@ -56,12 +61,12 @@ def get_messages(id, limit=10):
 def get_chats():
     chats = []
     result = client(GetDialogsRequest(
-                 offset_date='',
-                 offset_id=0,
-                 offset_peer=InputPeerEmpty(),
-                 limit=5,
-                 hash=0
-             ))
+        offset_date='',
+        offset_id=0,
+        offset_peer=InputPeerEmpty(),
+        limit=5,
+        hash=0
+    ))
 
     for i in result.users:
         chats.append((i.id, i.username))
