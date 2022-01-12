@@ -45,10 +45,18 @@
 
     <script>
 
+    	function generete_text(text){
+    		if(text.split('.').pop() == "jpg" || text.split('.').pop() == "jpg"){
+    			return "<img src='"+text+"'></img>";
+    		}
+    		
+    		return text; 
+    	}
+
     	function generete_my_message(text, date){
     		return '<div class="outgoing_msg">\
               <div class="sent_msg">\
-                <p>'+text+'</p>\
+                <p>'+generete_text(text)+'</p>\
                 <span class="time_date"> '+date+' </span> </div>\
             </div>';
     	}
@@ -57,7 +65,7 @@
     		return '<div class="incoming_msg">\
               <div class="received_msg">\
                 <div class="received_withd_msg">\
-                  <p>'+text+'</p>\
+                  <p>'+generete_text(text)+'</p>\
                   <span class="time_date"> '+date+'</span></div>\
               </div>\
             </div>';
