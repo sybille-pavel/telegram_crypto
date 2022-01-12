@@ -26,8 +26,7 @@ def send_public_key(id):
 
 @eel.expose
 def get_messages(id):
-    res = TelegramManager.get_messages(int(id), limit=5)
-    return res
+    return TelegramManager.get_messages(int(id), limit=5)
 
 @eel.expose
 def get_chat_info(id):
