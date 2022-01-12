@@ -16,7 +16,7 @@
         <div class="inbox_people">
           <div class="headind_srch">
             <div class="recent_heading">
-              <h4>Recent</h4>
+              <h4>Еблеворот анархия</h4>
             </div>
             <div class="srch_bar">
               <div class="stylish-input-group">
@@ -34,8 +34,8 @@
           <div class="msg_history">
           </div>
           <div class="type_msg">
-            <div class="input_msg_write">
-              <input type="text" class="write_msg" placeholder="Type a message" />
+            <div id="input_msg_write">
+            
             </div>
           </div>
         </div>
@@ -97,8 +97,13 @@
  	       	msgs = msgs.reverse();
         	$('.msg_history').empty();
 
+        	if(0){
+        		$('#input_msg_write').html('<button type="button" class="btn btn-danger btn-keys">Обменяться ключами</button>');
+        	}else{
+        		$('#input_msg_write').html('<input type="text" style="width:100%" class="write_msg" placeholder="Type a message" /> ');
+        	}
+
         	msgs.forEach(async function(i){
-        		console.log(i);
         		new_item = i['from'] ? generete_my_message(i['value'], i['date']) : generete_your_message(i['value'], i['date']);
 
 		       	$('.msg_history').append(new_item);
