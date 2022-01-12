@@ -28,6 +28,15 @@ def send_public_key(id):
 def get_messages(id):
     return TelegramManager.get_messages(int(id), limit=5)
 
+@eel.expose
+def get_chat_info(id):
+    crypto = RSATelegram.RSAMessages(id)
+    return crypto.getChatInfo()
+
+@eel.expose
+def get_companion_public_key(id):
+    crypto = RSATelegram.RSAMessages(id)
+    return crypto.getCompanionPublicKey()
 
 eel.init("web")
 eel.start("main.html", size=(1200, 700))
